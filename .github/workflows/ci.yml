@@ -38,13 +38,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-docker-
 
-      - name: Build Docker image
+            - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/sql-connection:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/mysqli-message:latest .
+
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/sql-connection:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/mysqli-connection:latest
 
       - name: Run Docker container with MySQL service
         run: |
