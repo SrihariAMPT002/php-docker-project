@@ -51,7 +51,7 @@ jobs:
         run: |
           docker network create mynetwork
           docker run -d --network=mynetwork --name mysql-container -e MYSQL_ROOT_PASSWORD=root mysql:latest
-          docker run -d -p 8080:80 --network=mynetwork --name php-app -e DB_HOST=mysql-container -e DB_USER=root -e DB_PASSWORD=root ${{ secrets.DOCKER_USERNAME }}/rts-message:latest
+          docker run -d -p 8080:80 --network=mynetwork --name php-app -e DB_HOST=mysql-container -e DB_USER=root -e DB_PASSWORD=root ${{ secrets.DOCKER_USERNAME }}/mysqli-connection:latest
 
       - name: Test the PHP application
         run: |
