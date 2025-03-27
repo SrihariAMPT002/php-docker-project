@@ -4,7 +4,7 @@ echo "<html>
     <title>Welcome Page</title>
     <style>
         body {
-            background-color: #f0f8ff; /* Light blue background */
+            background-color:rgb(255, 240, 242); /* Light blue background */
             color: #333; /* Dark text color */
             font-family: Arial, sans-serif;
             text-align: center;
@@ -17,7 +17,7 @@ echo "<html>
 </head>
 <body>
     <h1>Welcome to My Website!</h1>
-    <p>Hello, World!</p>
+    <p>RTS demo trails into docker</p>
 </body>
 </html>";
 ?>
