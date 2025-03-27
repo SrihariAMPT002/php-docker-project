@@ -1,8 +1,8 @@
-version: '3.8'
 services:
   app:
+    image: testing_two
     build: .
-    ports:
-      - "8080:80"
     volumes:
-      - ./src:/var/www/html
+      - ./src:/var/www/html  # Correcting the source path
+    ports:
+      - "8081:80"
