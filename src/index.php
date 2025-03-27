@@ -21,10 +21,15 @@ echo "<html>
 </body>
 </html>";
 
-$servername = getenv('DB_HOST');  
-$username = getenv('DB_USER');    
-$password = getenv('DB_PASSWORD'); 
+$servername = getenv('DB_HOST');
+$username = getenv('DB_USER');
+$password = getenv('DB_PASSWORD');
 $dbname = "test"; 
+
+// Debugging: print out environment variables
+echo "DB_HOST: " . $servername . "<br>";
+echo "DB_USER: " . $username . "<br>";
+echo "DB_PASSWORD: " . $password . "<br>";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -32,7 +37,5 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-echo "Connected successfully to the 'test' database"; 
-
-
+echo "Connected successfully to the 'test' database";
 ?>

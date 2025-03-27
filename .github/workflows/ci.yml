@@ -49,8 +49,8 @@ jobs:
       - name: Run Docker container with MySQL service
         run: |
           docker network create mynetwork
-          docker run -d --network=mynetwork --name mysql-container -e MYSQL_ROOT_PASSWORD=root mysql:latest
-          docker run -d -p 8080:80 --network=mynetwork --name php-app -e DB_HOST=mysql-container -e DB_USER=root -e DB_PASSWORD=root ${{ secrets.DOCKER_USERNAME }}/sql-test:latest
+          docker run -d --name mysql-container -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:latest
+          docker run -d -p 8080:80 --name php-app -e DB_HOST=localhost -e DB_USER=root -e DB_PASSWORD=root ${{ secrets.DOCKER_USERNAME }}/sql-test:latest
 
       - name: Test the PHP application
         run: |
