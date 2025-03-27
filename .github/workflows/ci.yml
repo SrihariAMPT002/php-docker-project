@@ -40,15 +40,15 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/welcome-message:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rts-message:latest .
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/welcome-message:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/rts-message:latest
 
       - name: Run Docker container
         run: |
-          docker run -d -p 8080:80 ${{ secrets.DOCKER_USERNAME }}/welcome-message:latest
+          docker run -d -p 8080:80 ${{ secrets.DOCKER_USERNAME }}/rts-message:latest
 
       - name: Test the PHP application
         run: |
