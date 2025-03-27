@@ -38,27 +38,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-docker-
 
-            - name: Build Docker image
+      - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/mysqli-connection:latest .
-
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rts-message:latest .
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/mysqli-connection:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/rts-message:latest
 
-      - name: Run Docker container with MySQL service
+      - name: Run Docker container
         run: |
-          docker network create mynetwork
-          docker run -d --network=mynetwork --name mysql-container -e MYSQL_ROOT_PASSWORD=root mysql:latest
-          docker run -d -p 8080:80 --network=mynetwork --name php-app -e DB_HOST=mysql-container -e DB_USER=root -e DB_PASSWORD=root ${{ secrets.DOCKER_USERNAME }}/mysqli-connection:latest
+          docker run -d -p 8080:80 ${{ secrets.DOCKER_USERNAME }}/rts-message:latest
 
       - name: Test the PHP application
         run: |
           sleep 5
           curl --fail http://localhost:8080/index.php || exit 1
 
-      - name: Clean up Docker containers
+      - name: Clean up Docker container
         run: |
           docker stop $(docker ps -q)
           docker system prune -f
