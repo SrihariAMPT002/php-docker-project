@@ -49,13 +49,13 @@ jobs:
       - name: Run Docker container with MySQL service
         run: |
           docker network create mynetwork
-          docker run -d --name mysql-container -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:latest
-          docker run -d -p 8080:80 --name php-app -e DB_HOST=mysql-container -e DB_USER=root -e DB_PASSWORD=root ${{ secrets.DOCKER_USERNAME }}/sql-test:latest
+          docker run -d --name mysql-container --network mynetwork -e MYSQL_ROOT_PASSWORD=root mysql:latest
+          docker run -d -p 8080:80 --name php-app --network mynetwork -e DB_HOST=mysql-container -e DB_USER=root -e DB_PASSWORD=root ${{ secrets.DOCKER_USERNAME }}/sql-test:latest
 
       - name: Test the PHP application
         run: |
           sleep 5
-          curl --fail http://localhost:8080/index.php || exit 1
+          curl --fail http://php-app:8080/index.php || exit 1
 
       - name: Clean up Docker containers
         run: |
