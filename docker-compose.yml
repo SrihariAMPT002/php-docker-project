@@ -3,6 +3,31 @@ services:
     image: testing_two
     build: .
     volumes:
-      - ./src:/var/www/html  # Correcting the source path
+      - ./src:/var/www/html  # Correct volume mount for the app service
     ports:
-      - "8080:80"
+      - "8080:80"  # Port mapping for the app service
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: mysql  # Use the service name for MySQL container
+    networks:
+      - mynetwork  # Reference the network here
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+    ports:
+      - "3307:3306"  # Port mapping for MySQL
+    volumes:
+      - mysql-data:/var/lib/mysql  # Persist MySQL data
+    networks:
+      - mynetwork  # Reference the network here
+
+volumes:
+  mysql-data:  # Declare the named volume for MySQL data
+
+networks:
+  mynetwork:  # Define the network here
+    driver: bridge

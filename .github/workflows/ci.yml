@@ -49,13 +49,23 @@ jobs:
       - name: Run Docker container with MySQL service
         run: |
           docker network create mynetwork
+          
+          # Start MySQL container in detached mode
           docker run -d --name mysql-container --network mynetwork -e MYSQL_ROOT_PASSWORD=root mysql:latest
+
+          # Wait for MySQL to be ready before starting the PHP app
+          until docker exec mysql-container mysqladmin --user=root --password=root --host=localhost --silent ping; do
+            echo "Waiting for MySQL to be ready..."
+            sleep 2
+          done
+
+          # Start PHP app container
           docker run -d -p 8080:80 --name php-app --network mynetwork -e DB_HOST=mysql-container -e DB_USER=root -e DB_PASSWORD=root ${{ secrets.DOCKER_USERNAME }}/sql-test:latest
 
       - name: Test the PHP application
         run: |
-          # Wait for MySQL and PHP containers to be fully initialized
-          sleep 10
+          # Wait for PHP app to be ready
+          sleep 20
           
           # Use curl to test the PHP application within the Docker network
           docker exec php-app curl --fail http://php-app:8080/index.php || exit 1

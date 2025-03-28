@@ -20,16 +20,10 @@ echo "<html>
     <p>RTS demo trails into docker</p>
 </body>
 </html>";
-
-$servername = getenv('DB_HOST');
-$username = getenv('DB_USER');
-$password = getenv('DB_PASSWORD');
+$servername = "mysql"; 
+$username = "root";
+$password = "root";
 $dbname = "test"; 
-
-// Debugging: print out environment variables
-echo "DB_HOST: " . $servername . "<br>";
-echo "DB_USER: " . $username . "<br>";
-echo "DB_PASSWORD: " . $password . "<br>";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
