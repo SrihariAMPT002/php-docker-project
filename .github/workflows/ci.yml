@@ -54,8 +54,11 @@ jobs:
 
       - name: Test the PHP application
         run: |
-          sleep 5
-          curl --fail http://php-app:8080/index.php || exit 1
+          # Wait for MySQL and PHP containers to be fully initialized
+          sleep 10
+          
+          # Use curl to test the PHP application within the Docker network
+          docker exec php-app curl --fail http://php-app:8080/index.php || exit 1
 
       - name: Clean up Docker containers
         run: |
