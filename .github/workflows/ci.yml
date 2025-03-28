@@ -65,10 +65,10 @@ jobs:
       - name: Test the PHP application
         run: |
           # Wait for PHP app to be ready
-          sleep 20
+          sleep 30
           
           # Use curl to test the PHP application within the Docker network
-           docker exec php-app curl --fail http://php-app:8080/index.php || exit 1
+          docker exec php-app curl --fail http://php-app:80/index.php || exit 1
 
       - name: Clean up Docker containers
         run: |
